@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} Post yaratish{% endblock title %}
+{% block content %}
+<div class="container">
+    <h2>Yangi post yaratish</h2>
+    <form class="pt-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Post yaratish</button>
+    </form>
+</div>
+{% endblock content %}

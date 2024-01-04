@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <section id="contentbody">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+            <div class="left_bar">
+              <div class="single_leftbar">
+                <h2><span>Oxirgi postlar</span></h2>
+                <div class="singleleft_inner">
+                  <ul class="recentpost_nav wow fadeInDown">
+                    {% for post in oxirgi_post %}
+                    <li><a href="{% url 'post:post-detail' slug=post.slug %}">{% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>No image available</p> {% endif %}</a> <a class="recent_title" href="{% url 'post:post-detail' slug=post.slug %}"> {{ post.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="single_leftbar wow fadeInDown">
+                <h2><span>Buni ko'ring</span></h2>
+                {% for only in kop_korilgan_post %}
+                    {% if forloop.last%}
+                    <div class="singleleft_inner"> <a href="{% url 'post:post-detail' slug=only.slug %}">{% if only.image %}<img src="{{ only.image.url }}" alt="{{ only.image.name }}"> {% else %} <p>No image available</p> {% endif %}</a></div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
+          <div class="row">
+            <div class="middle_bar">
+              <div class="featured_sliderarea">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for carousel in kop_korilgan_post %}
+                        <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        {% for carousel in kop_korilgan_post %}
+                        <div class="item {% if forloop.first %}active{% endif %}">
+                            {% if carousel.image %} <img src="{{ carousel.image.url }}" alt="{{ carousel.image.name }}"> {% else %} <p>No image available</p> {% endif %}
+                            <div class="carousel-caption">
+                                <h1><a href="{% url 'post:post-detail' slug=carousel.slug %}">{{ carousel.title|truncatewords:7 }}</a></h1>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left left_slide" href="#myCarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> </a> <a class="right right_slide" href="#myCarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+                </div>
+              </div>
+              <div class="single_category wow fadeInDown">
+                <div class="category_title {% if category == 'mahalliy' %}active{% endif %}"> <a href="{% url 'post:category-archive' category='mahalliy' %}">Mahalliy</a></div>
+                <div class="single_category_inner">
+                  <ul class="catg_nav">
+                    {% for post in mahalliy %}
+                    <li>
+                      <div class="catgimg_container"> <a class="catg1_img" href="{% url 'post:post-detail' slug=post.slug %}"> {% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>Rasm mavjud emas</p> {% endif %} </a></div>
+                      <a href="{% url 'post:post-detail' slug=post.slug %}">{{ post.title }}</a>
+                      <div class="sing_commentbox">
+                        <p><i class="fa fa-calendar"></i>{{ post.created_on|date:"F d, Y" }}</p>
+                      </div>
+                        <p class="post-summary">{{ post.text | truncatewords:15 }}</p>
+                   </li>
+                   {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="single_category wow fadeInDown">
+                <div class="category_title {% if category == 'xorij' %}active{% endif %}"> <a href="{% url 'post:category-archive' category='xorij' %}">Xorij</a></div>
+                <div class="single_category_inner">
+                  <ul class="catg_nav">
+                    {% for post in xorij %}
+                    <li>
+                      <div class="catgimg_container"> <a class="catg1_img" href="{% url 'post:post-detail' slug=post.slug %}"> {% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>No image available</p> {% endif %} </a></div>
+                      <a href="{% url 'post:post-detail' slug=post.slug %}">{{ post.title }}</a>
+                      <div class="sing_commentbox">
+                        <p><i class="fa fa-calendar"></i>{{ post.created_on|date:"F d, Y" }}</p>
+                      </div>
+                        <p class="post-summary">{{ post.text | truncatewords:15 }}</p>
+                   </li>
+                   {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="single_category wow fadeInDown">
+                <div class="category_title {% if category == 'sport' %}active{% endif %}"> <a href="{% url 'post:category-archive' category='sport' %}">Sport</a></div>
+                <div class="single_category_inner">
+                  <ul class="catg_nav">
+                    {% for post in sport %}
+                    <li>
+                      <div class="catgimg_container"> <a class="catg1_img" href="{% url 'post:post-detail' slug=post.slug %}"> {% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>No image available</p> {% endif %} </a></div>
+                      <a href="{% url 'post:post-detail' slug=post.slug %}">{{ post.title }}</a>
+                      <div class="sing_commentbox">
+                        <p><i class="fa fa-calendar"></i>{{ post.created_on|date:"F d, Y" }}</p>
+                      </div>
+                        <p class="post-summary">{{ post.text | truncatewords:15 }}</p>
+                   </li>
+                   {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="single_category wow fadeInDown">
+                <div class="category_title {% if category == 'siyosat' %}active{% endif %}"> <a href="{% url 'post:category-archive' category='siyosat' %}">Siyosat</a></div>
+                <div class="single_category_inner">
+                  <ul class="catg_nav">
+                    {% for post in siyosat %}
+                    <li>
+                      <div class="catgimg_container"> <a class="catg1_img" href="{% url 'post:post-detail' slug=post.slug %}"> {% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>No image available</p> {% endif %} </a></div>
+                      <a href="{% url 'post:post-detail' slug=post.slug %}">{{ post.title }}</a>
+                      <div class="sing_commentbox">
+                        <p><i class="fa fa-calendar"></i>{{ post.created_on|date:"F d, Y" }}</p>
+                      </div>
+                        <p class="post-summary">{{ post.text | truncatewords:15 }}</p>
+                   </li>
+                   {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="right_bar">
+              <div class="single_leftbar wow fadeInDown">
+                <div class="category_title"> <a href="{% url 'post:popular_posts_with_period' period='all' %}">Eng ko'p ko'rilgan postlar</a></div>
+                <div class="singleleft_inner">
+                  <ul class="catg3_snav ppost_nav wow fadeInDown">
+                    {% for post in kop_korilgan_post %}
+                    <li>
+                      <div class="media"> <a href="{% url 'post:post-detail' slug=post.slug %}" class="media-left"> {% if post.image %} <img src="{{ post.image.url }}" alt="{{ post.image.name }}"> {% else %} <p>Rasm mavjud emas</p> {% endif %} </a>
+                        <div class="media-body"> <a href="{% url 'post:post-detail' slug=post.slug %}" class="catg_title"> {{ post.title | truncatewords:6 }}</a></div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock content%}

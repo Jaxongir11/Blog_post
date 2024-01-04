@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+        <title>Asosiy sahifa</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/li-scroller.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/theme.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+        <script src="{% static 'js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'js/respond.min.js' %}"></script>
+</head>
+<body>
+    <div id="preloader">
+        <div id="status">&nbsp</div>
+    </div>
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+<div class="container">
+  <div class="box_wrapper">
+      <header id="header">
+      <div class="header_top">
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav custom_nav">
+                <li><a class="nav-link active" href="{% url 'post:post-list' %}">Asosiy sahifa</a></li>
+                <li><a class="nav-link" href="{% url 'post:last-post' %}">Oxirgi postlar</a></li>
+                <li><a class="nav-link" href="{% url 'post:popular_posts_with_period' period='all' %}">Eng ko'p ko'rilgan postlar</a></li>
+                <li><a class="nav-link" href="{% url 'post:popular_posts_with_period' period='week' %}">Haftaning ommabop postlari</a></li>
+                <li><a class="nav-link" href="{% url 'post:popular_posts_with_period' period='month' %}">Oyning ommabop postlari</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ user.username }}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <form method="post" action="{% url 'accounts:profile' %}" >
+                                            {% csrf_token %}
+                                                <button type="submit" class="btn btn-light ms-3">Shaxsiy profil</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form method="post" action="{% url 'accounts:logout' %}">
+                                            {% csrf_token %}
+                                                <button type="submit" class="btn btn-light ms-3">Log Out</button>
+                                            </form>
+                                        </li>
+                                        {% if user.is_staff %}
+                                        <li>
+                                            <form method="post" action="{% url 'post:post-create' %}">
+                                            {% csrf_token %}
+                                                <button type="submit" class="btn btn-light ms-3">Post qo'shish</button>
+                                            </form>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                    {% else %}
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Login
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <form method="post" action="{% url 'accounts:login' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-light ms-3">Login</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form method="post" action="{% url 'accounts:register' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-light ms-3">Register</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                    {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </nav>
+        <div class="header_search">
+          <button id="searchIcon"><i class="fa fa-search"></i></button>
+          <div id="shide">
+            <div id="search-hide">
+              <form action="#">
+                <input type="text" size="40" placeholder="Search here ...">
+              </form>
+              <button class="remove"><span><i class="fa fa-times"></i></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </header>
+        {% block content %}{% endblock content %}
+      <footer id="footer">
+      <div class="footer_top">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="single_footer_top wow fadeInLeft">
+            <h2>Elektron pochta orqali kuzatib boring</h2>
+            <div class="subscribe_area">
+              <p>"Bizning xabarlarimizni olish uchun obuna bo'ling, bu xavfsiz, shunchaki elektron pochtangizni yozing va Submit tugmasini bosing"</p>
+              <form action="#">
+                <div class="subscribe_mail">
+                  <input class="form-control" type="email" placeholder="Email Address">
+                  <i class="fa fa-envelope"></i></div>
+                <input class="submit_btn" type="submit" value="Submit">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="single_footer_top wow fadeInRight">
+            <h2>Kategoriyalar</h2>
+            <ul class="footer_labels">
+              <li><a href="{% url 'post:category-archive' category='mahalliy' %}">Mahalliy</a></li>
+              <li><a href="{% url 'post:category-archive' category='xorij' %}">Xorij</a></li>
+              <li><a href="{% url 'post:category-archive' category='sport' %}">Sport</a></li>
+              <li><a href="{% url 'post:category-archive' category='siyosat' %}">Siyosat</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="single_footer_top wow fadeInRight">
+            <h2>Biz bilan bog'laning</h2>
+            <form action="#" class="contact_form">
+              <label>Ismingiz</label>
+              <input class="form-control" type="text">
+              <label>Email*</label>
+              <input class="form-control" type="email">
+              <label>Izoh*</label>
+              <textarea class="form-control" cols="30" rows="10"></textarea>
+              <input class="send_btn" type="submit" value="Send">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer_bottom">
+        <div class="footer_bottom_left">
+          <p>Copyright &copy; 2024</p>
+        </div>
+        <div class="footer_bottom_right">
+          <ul>
+            <li><a class="tootlip" data-toggle="tooltip" data-placement="top" title="Twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="tootlip" data-toggle="tooltip" data-placement="top" title="Facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="tootlip" data-toggle="tooltip" data-placement="top" title="Googel+" href="#"><i class="fa fa-google-plus"></i></a></li>
+            <li><a class="tootlip" data-toggle="tooltip" data-placement="top" title="Youtube" href="#"><i class="fa fa-youtube"></i></a></li>
+            <li><a class="tootlip" data-toggle="tooltip" data-placement="top" title="Rss" href="#"><i class="fa fa-rss"></i></a></li>
+          </ul>
+        </div>
+    </div>
+    </footer>
+  </div>
+</div>
+    <script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <script src="{% static 'js/jquery.li-scroller.1.0.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    </body>
+</html>

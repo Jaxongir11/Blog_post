@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% load hitcount_tags %}
+{% block content %}
+  <h2>{% if period == 'week' %}Haftadagi mashhur{% elif period == 'month' %}Bir oydagi mashhur{% else %}Eng ko'p ko'rilgan {% endif %} postlar</h2>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'post:post-detail' slug=post.slug%}">{{ post.title }} </a> <i class="bi bi-eye"></i>{% get_hit_count for post %}</li>
+    {% endfor %}
+  </ul>
+{% endblock content%}

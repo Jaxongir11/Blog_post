@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load hitcount_tags %}
+{% block content %}
+  <h2>Oxirgi postlar</h2>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'post:post-detail' slug=post.slug%}">{{ post.title }} <i class="bi bi-eye"></i>{% get_hit_count for post %}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock content%}

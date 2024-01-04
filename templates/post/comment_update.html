@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Izohni yangilash {% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h2>Izohni yangilash</h2>
+    <a href="{% url 'post:post-detail' slug=object.post.slug %}" class="btn btn-light">Bekor qilish</a>
+    <form class="pt-3" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="btn btn-primary">Yangilash</button>
+    </form>
+
+  </div>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Izohni o'chirish{% endblock title %}
+{% block content %}
+  <h1>"{{ comment_delete.text }}" ushbu izohni o'chirmoqchimisiz?</h1>
+  <a href="{% url 'post:post-detail' slug=object.post.slug %}" class="btn btn-light">Bekor qilish</a>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">O'chirish</button>
+  </form>
+
+{% endblock %}

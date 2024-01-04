@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+<form method="post" action="{% url 'blog:add_comment' post.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Comment</button>
+</form>

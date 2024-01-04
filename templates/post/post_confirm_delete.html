@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Postni o'chirish{% endblock title %}
+{% block content %}
+  <h1>"{{ post_delete.title }}" nomli postni o'chirmoqchimisiz?</h1>
+
+  <a href="{% url 'post:post-detail' slug=post_delete.slug %}" class="btn btn-light">Bekor qilish</a>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">O'chirish</button>
+  </form>
+
+{% endblock %}

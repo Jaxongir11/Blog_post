@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load hitcount_tags %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{{ object.title }}</h1>
+        <p class=" text-muted">{{ object.author }} | {{ object.updated_on }} | <i class="bi bi-eye"></i>{% get_hit_count for object %}
+        {% if object.author == request.user %}
+            <a href="{% url 'post:post-update' object.id %}"><i class="bi bi-pen"></i></a>
+            <a href="{% url 'post:post-delete' object.id %}"><i class="bi bi-trash"></i></a>
+        {% endif %}
+        </p>
+        {% if object.image %} <img width="400px" src="{{ object.image.url }}" alt="{{ object.image.name }}">{% endif %}
+        <p class="card-text ">{{ object.text | safe }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin: 10px">
+  {% if comments %}
+  <h2>Izohlar</h2>
+   <div class="col-md-8 card mb-4 mt-3 left top">
+      {% for comment in comments %}
+          <ul style="display: inline">
+            <li style="display: inline">
+                <b>{{ comment.author.username }}</b> | {{ comment.created_at }}
+                {% if comment.author == request.user %}
+                <a href="{% url 'post:update-comment' object.slug comment.pk %}"><i class="bi bi-pen"></i></a>
+                <a href="{% url 'post:delete-comment' object.slug comment.pk %}"><i class="bi bi-trash"></i></a>
+                {% endif %}
+            </li>
+            <li style="display: inline">
+                <p class="mt-2"> {{ comment.text }}</p>
+            </li>
+          </ul>
+      {% endfor %}
+   </div>
+  {% endif %}
+  </div>
+
+   {% if user.is_authenticated %}
+    <h2>Izoh qo'shish</h2>
+        <form method="post" action="{% url 'post:add-comment' post_detail.slug %}">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button class="btn btn-primary" type="submit">Qo'shish</button>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock content %}
