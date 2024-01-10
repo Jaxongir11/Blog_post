@@ -57,14 +57,12 @@
                                                 <button type="submit" class="btn btn-light ms-3">Log Out</button>
                                             </form>
                                         </li>
-                                        {% if user.is_staff %}
                                         <li>
                                             <form method="post" action="{% url 'post:post-create' %}">
                                             {% csrf_token %}
                                                 <button type="submit" class="btn btn-light ms-3">Post qo'shish</button>
                                             </form>
                                         </li>
-                                        {% endif %}
                                     </ul>
                                 </div>
                     {% else %}
